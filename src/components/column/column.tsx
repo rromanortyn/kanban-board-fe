@@ -10,6 +10,7 @@ interface ColumnProps {
   type: 'todo' | 'in-progress' | 'done',
   id: number,
   onDrop: (id: number, columnId: number) => void,
+  onAddTask: (type: 'todo' | 'in-progress' | 'done') => void,
 }
 
 const Column = (props: ColumnProps) => {
@@ -39,7 +40,12 @@ const [{ canDrop, isOver }, dropRef] = useDrop(() => ({
       <Box sx={{
         mb: 2,
       }}>
-        <ColumnHeader title={props.title} count={props.tasks.length} />
+        <ColumnHeader
+          title={props.title}
+          count={props.tasks.length}
+          type={props.type}
+          onAddTask={props.onAddTask}
+        />
       </Box>
       <ColumnList tasks={props.tasks} onDrop={props.onDrop} />
     </Box>

@@ -1,12 +1,17 @@
+import { useState } from 'react'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Dialog from '@mui/material/Dialog'
 import { useNavigate } from 'react-router'
 
+import { useAddBoardMutation } from '../../redux/apis/board/board.api'
+
 const AddBoard = () => {
   const navigate = useNavigate()
+  const [addBoard] = useAddBoardMutation({})
 
+  const [boardName, setBoardName] = useState('')
   return (
     <Box>
       <Dialog
@@ -19,6 +24,8 @@ const AddBoard = () => {
           }
         }}>
         <TextField
+          value={boardName}
+          onChange={(e) => setBoardName(e.target.value)}
           label='Board name'
           variant='outlined'
           sx={{
@@ -28,7 +35,10 @@ const AddBoard = () => {
         <Button
           variant='contained'
           color='primary'
-          onClick={() => navigate('/')}
+          onClick={async () => {
+            await addBoard({ name: boardName })
+            navigate('/')
+          }}
         >
           Create
         </Button>

@@ -11,6 +11,7 @@ import SearchBar from './components/search-bar/search-bar'
 import Home from './pages/home/home'
 import AddBoard from './pages/add-board/add-board'
 import store from './redux/store'
+import Task from './pages/task/task'
 
 const router = createBrowserRouter([
 	{
@@ -25,8 +26,14 @@ const router = createBrowserRouter([
 	},
 	{
 		path: '/:id',
-		element: <Board />
-	}
+		element: <Board />,
+    children: [
+      {
+        path: 'tasks/:id',
+        element: <Task />
+      },
+    ],
+	},
 ])
 
 const App = () => {

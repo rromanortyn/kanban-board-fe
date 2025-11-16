@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import { useDrag } from 'react-dnd'
+import { Link } from 'react-router'
 
 interface ColumnListItemProps {
 	task: {
@@ -41,55 +41,46 @@ const ColumnListItem = (props: ColumnListItemProps) => {
 	}
 
 	return (
-		<Box
-      key={task.id}
-      sx={{
-        padding: 2,
-        borderRadius: 4,
-        backgroundColor: '#fffefe',
-        mb: 2,
-        cursor: 'pointer',
-        width: '100%',
-		  }}
-      ref={dragRef}
-    >
-			<Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-				<Typography variant='h5' lineHeight={1.25} sx={{ mb: 2 }}>
-					{task.title}
-				</Typography>
+    <Link to={`/tasks/${task.id}`}>
+      <Box
+        sx={{
+          padding: 2,
+          borderRadius: 4,
+          backgroundColor: '#fffefe',
+          mb: 2,
+          cursor: 'pointer',
+          width: '100%',
+        }}
+        ref={dragRef}
+      >
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Typography variant='h5' lineHeight={1.25} sx={{ mb: 2 }}>
+            {task.title}
+          </Typography>
 
-				<MoreHorizIcon sx={{
-					cursor: 'pointer',							
-					}}
-					onClick={(e) => {
-						setContextMenu({
-							mouseX: e.clientX,
-							mouseY: e.clientY,
-						})
-					}}
-				/>
-				<Menu
-					open={contextMenu !== null}
-					onClose={handleClose}
-					anchorReference='anchorPosition'
-					anchorPosition={
-						contextMenu !== null
-							? { top: contextMenu.mouseY, left: contextMenu.mouseX }
-							: undefined
-					}
-        >
-					<MenuItem onClick={handleClose}>Edit</MenuItem>
-					<MenuItem onClick={handleClose}>Delete</MenuItem>
-				</Menu>
-			</Box>
-			<Typography variant='body2' sx={{
-        display: '-webkit-box',
-        WebkitLineClamp: 3,
-        WebkitBoxOrient: 'vertical',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-      }}>{task.description}</Typography>
-    </Box>
+          <Menu
+            open={contextMenu !== null}
+            onClose={handleClose}
+            anchorReference='anchorPosition'
+            anchorPosition={
+              contextMenu !== null
+                ? { top: contextMenu.mouseY, left: contextMenu.mouseX }
+                : undefined
+            }
+          >
+            <MenuItem onClick={handleClose}>Edit</MenuItem>
+            <MenuItem onClick={handleClose}>Delete</MenuItem>
+          </Menu>
+        </Box>
+        <Typography variant='body2' sx={{
+          display: '-webkit-box',
+          WebkitLineClamp: 3,
+          WebkitBoxOrient: 'vertical',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+        }}>{task.description}</Typography>
+      </Box>
+    </Link>
 	)
 }
 
